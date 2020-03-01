@@ -3,3 +3,8 @@ path {
     stroke:rgb(32, 32, 26);
     stroke-width:0.4;
 }
+
+text {
+    font-size: 12px;
+    padding: 2px;
+}
