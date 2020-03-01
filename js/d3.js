@@ -1,15 +1,14 @@
+// 地図部分
+var width = 800;
+var height = 600;
 
-var width = 1200;
-var height = 700;
-
-var svg = d3.select("#myGraph")
+var map = d3.select("#mapChuo")
                 .attr("width", width)
                 .attr("height", height);
 
 var path = d3.geoPath()
                 .projection(d3.geoMercator()
-                    .center([141.35, 43.03])
-                    // .center(centroid(svg))
+                    .center([141.30, 43.03])
                     .scale(200000)
                     .translate([width / 2, height / 2])
                 );
@@ -23,10 +22,14 @@ var zoom = d3.zoom()
                 .scaleExtent([1, 8])
                 .on("zoom", zoomed);
 
-svg.call(zoom)
+map.call(zoom)
+
+var chart = d3.select("#graphChuo")
+                .attr("width", 1000)
+                .attr("height", 600);
 
 d3.json("./data/h27ka01101.json").then(function (data){
-    svg.selectAll("path")
+    map.selectAll("path")
     .data(data.features)
     .enter().append("path")
     .attr("d", path)
@@ -45,11 +48,20 @@ d3.json("./data/h27ka01101.json").then(function (data){
         alert(d.properties.MOJI+"の人口は"+d.properties.JINKO+"です。")
     });
 
+    // 棒グラフ部分
+    chart.selectAll("rect")
+            .data(data.features)
+            .enter()
+            .append("rect")
+            .attr("x", function(d) {return ;})
+            .attr("y", function(d, i) {return 10 * i})
+            .attr("width", function(d) {return d.properties.JINKO})
+            .attr("height", "9")
 });
 
 // ズーム機能
 function zoomed() {
-    svg.selectAll("path")
+    map.selectAll("path")
         .attr("transform", d3.event.transform);
         // .attr("stroke-width", 1 / d3.event.transform.k);
 }
