@@ -25,7 +25,7 @@ var zoom = d3.zoom()
 
 svg.call(zoom)
 
-d3.json("/ut_open/data/h27ka01101.json").then(function (data){
+d3.json("./data/h27ka01101.json").then(function (data){
     svg.selectAll("path")
     .data(data.features)
     .enter().append("path")
@@ -50,7 +50,7 @@ d3.json("/ut_open/data/h27ka01101.json").then(function (data){
 // ズーム機能
 function zoomed() {
     svg.selectAll("path")
-    .attr("transform", d3.event.transform);
-    // g.attr("stroke-width", 1 / d3.event.transform.k)
+        .attr("transform", d3.event.transform);
+        // .attr("stroke-width", 1 / d3.event.transform.k);
 }
 
